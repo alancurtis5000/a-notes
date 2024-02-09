@@ -89,7 +89,7 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>My Notes App</Heading>
+      <Heading level={1}>My Notes App New Feature</Heading>
       <View as="form" margin="3rem 0" onSubmit={createTodo}>
         <Flex direction="row" justifyContent="center">
           <TextField
