@@ -13,6 +13,7 @@ import {
   View,
   withAuthenticator,
 } from "@aws-amplify/ui-react";
+import { getCurrentUser } from "aws-amplify/auth";
 import { listTodos } from "./graphql/queries";
 import {
   createTodo as createTodoMutation,
@@ -24,10 +25,10 @@ const App = ({ signOut }) => {
   const client = generateClient();
 
   useEffect(() => {
-    fetchTodos();
+    fetchNotes();
   }, []);
 
-  async function fetchTodos() {
+  async function fetchNotes() {
     const apiData = await client.graphql({ query: listTodos });
     const notesFromAPI = apiData.data.listTodos.items;
     await Promise.all(
@@ -57,7 +58,7 @@ const App = ({ signOut }) => {
       query: createTodoMutation,
       variables: { input: data },
     });
-    fetchTodos();
+    fetchNotes();
     event.target.reset();
   }
 
@@ -70,6 +71,21 @@ const App = ({ signOut }) => {
       variables: { input: { id } },
     });
   }
+
+  async function currentAuthenticatedUser() {
+    try {
+      const userData = await getCurrentUser();
+      const { username, userId, signInDetails } = userData;
+      console.log(`The username: ${username}`);
+      console.log(`The userId: ${userId}`);
+      console.log(`The signInDetails: ${signInDetails}`);
+      console.log({ userData });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  currentAuthenticatedUser();
 
   return (
     <View className="App">
@@ -92,6 +108,12 @@ const App = ({ signOut }) => {
             variation="quiet"
             required
           />
+          <View
+            name="image"
+            as="input"
+            type="file"
+            style={{ alignSelf: "end" }}
+          />
           <Button type="submit" variation="primary">
             Create Note
           </Button>
@@ -110,15 +132,16 @@ const App = ({ signOut }) => {
               {note.name}
             </Text>
             <Text as="span">{note.description}</Text>
+            {note.image && (
+              <Image
+                src={note.image}
+                alt={`visual aid for ${notes.name}`}
+                style={{ width: 400 }}
+              />
+            )}
             <Button variation="link" onClick={() => deleteTodo(note)}>
               Delete note
             </Button>
-            <View
-              name="image"
-              as="input"
-              type="file"
-              style={{ alignSelf: "end" }}
-            />
           </Flex>
         ))}
       </View>
