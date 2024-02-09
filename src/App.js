@@ -22,10 +22,12 @@ import {
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
+  const [userName, setUserName] = useState("");
   const client = generateClient();
 
   useEffect(() => {
     fetchNotes();
+    currentAuthenticatedUser();
   }, []);
 
   async function fetchNotes() {
@@ -80,16 +82,19 @@ const App = ({ signOut }) => {
       console.log(`The userId: ${userId}`);
       console.log(`The signInDetails: ${signInDetails}`);
       console.log({ userData });
+      setUserName(username);
     } catch (err) {
       console.log(err);
     }
   }
 
-  currentAuthenticatedUser();
-
   return (
     <View className="App">
       <Heading level={1}>My Notes App New Feature</Heading>
+      <Flex direction="row" justifyContent="center">
+        <h3>User Name: {userName}</h3>
+        <Button onClick={signOut}>Sign Out</Button>
+      </Flex>
       <View as="form" margin="3rem 0" onSubmit={createTodo}>
         <Flex direction="row" justifyContent="center">
           <TextField
@@ -145,7 +150,6 @@ const App = ({ signOut }) => {
           </Flex>
         ))}
       </View>
-      <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
 };
