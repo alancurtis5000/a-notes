@@ -1,0 +1,14 @@
+{
+  "resourceName": "anotesStorage",
+  "policyUUID": "0d9bbbc4",
+  "bucketName": "anotes3fbd8106f3ed4115b9520dc7270f2285",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
