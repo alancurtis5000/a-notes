@@ -7,7 +7,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "auth": {
-    "anotes9b399654": {
+    "anotes9a916fbc": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -15,12 +15,6 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
-    }
-  },
-  "storage": {
-    "notesStorage": {
-      "BucketName": "string",
-      "Region": "string"
     }
   }
 }
